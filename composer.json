@@ -1,0 +1,22 @@
+{
+    "name": "iocaste/lumen-horizon-rabbitmq",
+    "description": "A package to support horizon with RabbitMQ on lumen framework",
+    "homepage": "https://github.com/iocaste/lumen-horizon-rabbitmq",
+    "license": "MIT",
+    "keywords": [
+        "lumen",
+        "lumen-horizon",
+        "lumen-horizon-rabbitmq",
+        "rabbitmq"
+    ],
+    "require": {
+        "illuminate/support": "^5.7",
+        "kinsolee/horizon-lumen": "^1.2",
+        "vladimir-yuldashev/laravel-queue-rabbitmq": "^7.1.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "Iocaste\\Lumen\\Horizon\\": "src"
+        }
+    }
+}
