@@ -1,6 +1,6 @@
 <?php
 
-namespace Iocaste\Lumen\Horizon\Jobs;
+namespace Noitran\Lumen\Horizon\Jobs;
 
 use VladimirYuldashev\LaravelQueueRabbitMQ\Queue\Jobs\RabbitMQJob as BaseJob;
 

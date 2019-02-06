@@ -1,8 +1,8 @@
 <?php
 
-namespace Iocaste\Lumen\Horizon\Connectors;
+namespace Noitran\Lumen\Horizon\Connectors;
 
-use Iocaste\Lumen\Horizon\RabbitMQQueue;
+use Noitran\Lumen\Horizon\RabbitMQQueue;
 use Enqueue\AmqpTools\DelayStrategyAware;
 use Enqueue\AmqpTools\RabbitMqDlxDelayStrategy;
 use Illuminate\Contracts\Events\Dispatcher;
@@ -12,6 +12,8 @@ use Interop\Amqp\AmqpConnectionFactory;
 use Interop\Amqp\AmqpConnectionFactory as InteropAmqpConnectionFactory;
 use Interop\Amqp\AmqpContext;
 use VladimirYuldashev\LaravelQueueRabbitMQ\Queue\Connectors\RabbitMQConnector as BaseConnector;
+use ReflectionClass;
+use LogicException;
 
 class RabbitMQConnector extends BaseConnector
 {
@@ -38,12 +40,18 @@ class RabbitMQConnector extends BaseConnector
     public function connect(array $config): Queue
     {
         if (false === array_key_exists('factory_class', $config)) {
-            throw new \LogicException('The factory_class option is missing though it is required.');
+            throw new LogicException('The factory_class option is missing though it is required.');
         }
 
         $factoryClass = $config['factory_class'];
-        if (false === class_exists($factoryClass) || false === (new \ReflectionClass($factoryClass))->implementsInterface(InteropAmqpConnectionFactory::class)) {
-            throw new \LogicException(sprintf('The factory_class option has to be valid class that implements "%s"', InteropAmqpConnectionFactory::class));
+        if (false === class_exists($factoryClass) ||
+            false === (new ReflectionClass($factoryClass))->implementsInterface(InteropAmqpConnectionFactory::class)) {
+            throw new LogicException(
+                sprintf(
+                    'The factory_class option has to be valid class that implements "%s"',
+                    InteropAmqpConnectionFactory::class
+                )
+            );
         }
 
         /** @var AmqpConnectionFactory $factory */

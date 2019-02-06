@@ -1,6 +1,6 @@
 <?php
 
-namespace Iocaste\Lumen\Horizon\Listeners;
+namespace Noitran\Lumen\Horizon\Listeners;
 
 use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\Queue\Events\JobFailed as LaravelJobFailed;

@@ -1,8 +1,8 @@
 <?php
 
-namespace Iocaste\Lumen\Horizon;
+namespace Noitran\Lumen\Horizon;
 
-use Iocaste\Lumen\Horizon\Jobs\RabbitMQJob;
+use Noitran\Lumen\Horizon\Jobs\RabbitMQJob;
 use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\Support\Str;
 use Laravel\Horizon\Events\JobDeleted;
@@ -28,7 +28,7 @@ class RabbitMQQueue extends BaseQueue
      *
      * @return int
      */
-    public function readyNow($queue = null)
+    public function readyNow($queue = null): int
     {
         return $this->size($queue);
     }
@@ -62,7 +62,11 @@ class RabbitMQQueue extends BaseQueue
     {
         $payload = (new JobPayload($this->createPayload($job, $data)))->prepare($job)->value;
 
-        return tap(parent::pushRaw($payload, $queue, ['delay' => $this->secondsUntil($delay)]), function () use ($payload, $queue): void {
+        $options = [
+            'delay' => $this->secondsUntil($delay),
+        ];
+
+        return tap(parent::pushRaw($payload, $queue, $options), function () use ($payload, $queue): void {
             $this->event($this->getQueue($queue), new JobPushed($payload));
         });
     }
@@ -70,10 +74,10 @@ class RabbitMQQueue extends BaseQueue
     /**
      * {@inheritdoc}
      */
-    protected function popRaw($queueName = null)
+    protected function popRaw($queueName = null): ?RabbitMQJob
     {
         try {
-            list($queue) = $this->declareEverything($queueName);
+            [$queue] = $this->declareEverything($queueName);
 
             $consumer = $this->getContext()->createConsumer($queue);
 
@@ -135,7 +139,7 @@ class RabbitMQQueue extends BaseQueue
      *
      * @return string
      */
-    protected function createPayloadArray($job, $queue, $data = '')
+    protected function createPayloadArray($job, $queue, $data = ''): string
     {
         return array_merge(parent::createPayloadArray($job, $queue, $data), [
             'id' => $this->getRandomId(),
@@ -147,7 +151,7 @@ class RabbitMQQueue extends BaseQueue
      * Fire the job deleted event.
      *
      * @param  string  $queue
-     * @param  \Iocaste\Lumen\Horizon\Jobs\RabbitMQJob  $job
+     * @param  \Noitran\Lumen\Horizon\Jobs\RabbitMQJob  $job
      *
      * @return void
      */
@@ -173,7 +177,7 @@ class RabbitMQQueue extends BaseQueue
      *
      * @return string
      */
-    protected function getRandomId()
+    protected function getRandomId(): string
     {
         return JobId::generate();
     }

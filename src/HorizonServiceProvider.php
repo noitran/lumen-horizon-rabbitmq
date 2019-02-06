@@ -1,8 +1,8 @@
 <?php
 
-namespace Iocaste\Lumen\Horizon;
+namespace Noitran\Lumen\Horizon;
 
-use Iocaste\Lumen\Horizon\Connectors\RabbitMQConnector;
+use Noitran\Lumen\Horizon\Connectors\RabbitMQConnector;
 use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\Support\ServiceProvider;
 

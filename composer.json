@@ -1,14 +1,13 @@
 {
-    "name": "iocaste/lumen-horizon-rabbitmq",
-    "description": "A package to support horizon with RabbitMQ on lumen framework",
-    "homepage": "https://github.com/iocaste/lumen-horizon-rabbitmq",
-    "license": "MIT",
+    "name": "noitran/lumen-horizon-rabbitmq",
+    "description": "Connector package between horizon and RabbitMQ for lumen framework",
     "keywords": [
         "lumen",
         "lumen-horizon",
         "lumen-horizon-rabbitmq",
         "rabbitmq"
     ],
+    "license": "MIT",
     "require": {
         "illuminate/support": "^5.7",
         "kinsolee/horizon-lumen": "^1.2",
@@ -16,7 +15,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Iocaste\\Lumen\\Horizon\\": "src"
+            "Noitran\\Lumen\\Horizon\\": "src"
         }
     }
 }
