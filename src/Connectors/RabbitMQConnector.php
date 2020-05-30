@@ -44,6 +44,7 @@ class RabbitMQConnector extends BaseConnector
         }
 
         $factoryClass = $config['factory_class'];
+
         if (false === class_exists($factoryClass) ||
             false === (new ReflectionClass($factoryClass))->implementsInterface(InteropAmqpConnectionFactory::class)) {
             throw new LogicException(
